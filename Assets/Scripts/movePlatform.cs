@@ -6,7 +6,6 @@ public class movePlatform : MonoBehaviour
 {
     #region variables
     GameObject Ground;
-    float horizontalInput;
     [SerializeField] float moveSpeed = 4f;
     #endregion 
 

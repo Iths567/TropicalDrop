@@ -13,13 +13,12 @@ public class bounce : MonoBehaviour
     GameObject player;
     string currentLevel;
     [SerializeField] TextMeshProUGUI points;
-    bool parse;
     int score;
-    GameObject OldLayer = null;
+
     #endregion
 
 
-    //fix side hitbox on platforms
+    
 
 
     private void Start()
@@ -57,14 +56,23 @@ public class bounce : MonoBehaviour
         
         Debug.Log("Death");
         yield return new WaitForSeconds(1); 
-        SceneManager.LoadScene(currentLevel); //this will instead cause a menu to appear, on clicking retry the scene will then load
+        SceneManager.LoadScene(currentLevel); //this will eventually cause a menu to appear, on clicking retry the scene will then reload and next the next level should load 
     }
     
     IEnumerator LoadNextLevel()
     {
         Debug.Log("Loading");
         yield return new WaitForSeconds(1);
-        SceneManager.LoadScene("Thanks");
+        switch (currentLevel)
+        {
+            case "Level1":
+                SceneManager.LoadScene("Level2");
+                break;
+            case "Level2":
+                    SceneManager.LoadScene("Thanks");
+                break;
+        }
+        
     }
 
     private void OnTriggerEnter(Collider coll)
@@ -72,30 +80,11 @@ public class bounce : MonoBehaviour
         if (coll.gameObject.tag == "point") // add 1 to the score when going through points trigger
         {
             score++;
-            //destroyLayer(coll.gameObject);
-            GameObject.Destroy(coll);
+            GameObject.Destroy(coll.gameObject);
         }
 
     }
 
- /*   
-  *   This section is not needed as levels are not endless
-  *   
-  *   private void destroyLayer(GameObject newLayer)
-    {
-        if (newLayer != OldLayer && OldLayer != null)
-        {
-            GameObject.Destroy(OldLayer);
-            Debug.Log("New layer is not old layer");
-            OldLayer = newLayer;
-        }
-        else
-        {
-            OldLayer = newLayer;
-            Debug.Log("Old layer has been changed");
-        }
-    }
- */
     private void Update()
     {
         string uiString = score + " points";

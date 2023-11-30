@@ -11,6 +11,7 @@ public class btnScript : MonoBehaviour
     }
     public void startGame()
     {
+        //possibly make it so it loads the level and fades the UI
         SceneManager.LoadScene("Level1");
     }
     public void returnMenu()
